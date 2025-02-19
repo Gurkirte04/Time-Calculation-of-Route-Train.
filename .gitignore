@@ -1,1 +1,48 @@
+import array  # Import the array module for memory-efficient storage of numerical data
+
+def calculate_time(length: int, speed: int) -> float:  # Function to calculate travel time based on length and speed
+    return length / speed if speed > 0 else float('inf')  # Avoid division by zero, return infinity if speed is zero
+
+# Predefined values for train lengths and speeds using array for efficient storage
+train_lengths = array.array('i', [100, 200])  # Route lengths in km
+train_speeds = array.array('i', [50, 80])     # Train speeds in km/h
+
+def get_user_input() -> tuple:  # Function to prompt user for route lengths and speeds
+    length1 = int(input("Enter the length of route for Train 1 (in km): "))  # Input length for Train 1
+    length2 = int(input("Enter the length of route for Train 2 (in km): "))  # Input length for Train 2
+    speed1 = int(input("Enter the speed of Train 1 (in km/h): "))  # Input speed for Train 1
+    speed2 = int(input("Enter the speed of Train 2 (in km/h): "))  # Input speed for Train 2
+    return length1, length2, speed1, speed2  # Return all inputs as a tuple
+
+while True:  # Start a loop to let the user choose input method
+    print("Choose input method:")  # Show input method options
+    print("1. Manual Input")  # Option for manual input
+    print("2. Use Predefined Values")  # Option for predefined values
+    choice = input("Enter your choice (1 or 2): ")  # Get user input for choice
+    
+    if choice == "1":  # If user chooses manual input
+        length1, length2, speed1, speed2 = get_user_input()  # Call function to get manual inputs
+    elif choice == "2":  # If user chooses predefined values
+        length1, length2 = train_lengths[0], train_lengths[1]  # Use predefined lengths
+        speed1, speed2 = train_speeds[0], train_speeds[1]  # Use predefined speeds
+        print(f"Using predefined values: Train 1 -> Length: {length1} km, Speed: {speed1} km/h")  # Show predefined values for Train 1
+        print(f"Using predefined values: Train 2 -> Length: {length2} km, Speed: {speed2} km/h")  # Show predefined values for Train 2
+    else:  # If user provides invalid choice
+        print("Invalid choice. Please try again.")  # Error message for invalid choice
+        continue  # Restart the loop for valid input
+
+    time1 = calculate_time(length1, speed1)  # Calculate travel time for Train 1
+    time2 = calculate_time(length2, speed2)  # Calculate travel time for Train 2
+    
+    if time1 < time2:  # If Train 1 is faster
+        print("Train 1 has the fastest route.")  # Show message that Train 1 is faster
+    elif time2 < time1:  # If Train 2 is faster
+        print("Train 2 has the fastest route.")  # Show message that Train 2 is faster
+    else:  # If both trains have the same travel time
+        print("Both trains take the same time.")  # Show message if both are the same
+
+    again = input("Try again with new values? (yes/no): ").lower()  # Ask if user wants to try again
+    if again != "yes":  # If user doesn't want to try again
+        print("Goodbye!")  # Exit message
+        break  # Exit the loop and end the program
 
